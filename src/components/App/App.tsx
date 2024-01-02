@@ -1,7 +1,8 @@
+import Gallery from "../Gallery/Gallery";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div> </div>
+    <Gallery />
   );
 }
 
