@@ -1,8 +1,11 @@
 body {
-    background-color: #e0f7fa ;
-    min-height: 100vh;
-    min-width: 100vw;        
+    background-color: #e0f7fa ;   
     margin: 0;
+}
+
+.gallery-container {
+    max-width: 792px;
+    margin: 0px auto;
 }
 
 

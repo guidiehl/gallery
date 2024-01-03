@@ -3,10 +3,11 @@ import './Card.css';
 
 interface CardProps {
   children: React.ReactNode;
+  style?: React.CSSProperties; 
 }
 
-const Card: React.FC<CardProps> = ({ children }) => {
-  return <div className="card">{children}</div>;
+const Card: React.FC<CardProps> = ({ children, style }) => {
+  return <div className="card" style={style}>{children}</div>;
 };
 
 export default Card;
