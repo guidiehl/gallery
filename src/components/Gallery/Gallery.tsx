@@ -3,6 +3,7 @@ import { Photo } from "../../types/photo";
 import { Album } from "../../types/album";
 import { User } from "../../types/user";
 import './Gallery.css';
+import PhotoContainer from "../PhotosContainer/PhotoContainer";
 
 /* Gallery Component, shows list of photo item cards filtered through top search bar */
 export default function Gallery() {
@@ -29,10 +30,10 @@ export default function Gallery() {
     })
 
     const albumsResponse = useQuery<Album[] | null>({ 
-        queryKey: ['photos'], 
+        queryKey: ['albums'], 
         queryFn: async (): Promise<Album[]> => {
             try {
-                const res = await fetch('https://jsonplaceholder.typicode.com/photos');
+                const res = await fetch('https://jsonplaceholder.typicode.com/albums');
     
                 const data: Album[] = await res.json();
                 
@@ -40,17 +41,17 @@ export default function Gallery() {
             } catch (error) {
                 console.log(error);
     
-                throw new Error('Error fetching photos');
+                throw new Error('Error fetching albums');
             }
     
         } 
     })
 
     const usersResponse = useQuery<User[] | null>({ 
-        queryKey: ['photos'], 
+        queryKey: ['users'], 
         queryFn: async (): Promise<User[]> => {
             try {
-                const res = await fetch('https://jsonplaceholder.typicode.com/photos');
+                const res = await fetch('https://jsonplaceholder.typicode.com/users');
     
                 const data: User[] = await res.json();
                 
@@ -58,7 +59,7 @@ export default function Gallery() {
             } catch (error) {
                 console.log(error);
     
-                throw new Error('Error fetching photos');
+                throw new Error('Error fetching users');
             }
     
         } 
@@ -84,32 +85,40 @@ export default function Gallery() {
                 photos = photoResponse.data;                
             }
 
-            content = <div className="gallery">
-                {
-                    photos.map((photo: Photo) => (
-                        <div key={photo.id}>
-                            <p>{photo.title}</p>
-                            <p>album</p>
-                            <img src={photo.thumbnailUrl} alt={photo.title} />
-                            <p>user</p>
-                            
-                        </div>
-                    ))
-                }
-            </div>
+            if (albumsResponse.data != null) {
+                albums = albumsResponse.data;
+            }
+
+            if (usersResponse.data != null) {
+                users = usersResponse.data;
+            }
+
+            photos = photos.map((photo: Photo) => {
+
+                const album = albums.find((album: Album) => album.id === photo.albumId);
+                const user = users.find((user: User) => user.id === album?.userId);
             
-              break;
+                return {
+                    ...photo,
+                    albumTitle: album?.title ?? 'Album non trovato',
+                    username: user?.username ?? 'Utente non trovato'
+                }
+
+            });
+
+            content = <PhotoContainer photos={photos}/> 
+            
+            break;
         default:
             content = <div>Loading...</div>
             break;
     }
 
-    
-  
+      
     return (
-      <div>
+      <div className="gallery-container">
         <h1>Gallery</h1>
-        <div>{content}</div>
+        {content}
       </div>
     );
 }
