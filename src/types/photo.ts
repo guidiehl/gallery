@@ -5,5 +5,7 @@ export type Photo = {
     url: string;
     thumbnailUrl: string;
     rating: number;
+    albumTitle: string;
+    username: string;
 }
 
