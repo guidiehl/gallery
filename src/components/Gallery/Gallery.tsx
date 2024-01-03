@@ -4,12 +4,17 @@ import { Album } from "../../types/album";
 import { User } from "../../types/user";
 import './Gallery.css';
 import PhotoContainer from "../PhotosContainer/PhotoContainer";
+import SearchBar from "../SearchBar/SearchBar";
+import { useState } from "react";
 
 /* Gallery Component, shows list of photo item cards filtered through top search bar */
 export default function Gallery() {
+    
     let photos: Photo[] = [];
     let albums: Album[] = [];
     let users: User[] = [];
+
+    const [filteredPhotos, setFilteredPhotos] = useState(photos);
 
     const photoResponse = useQuery<Photo[] | null>({ 
         queryKey: ['photos'], 
@@ -106,17 +111,36 @@ export default function Gallery() {
 
             });
 
-            content = <PhotoContainer photos={photos}/> 
+            content = (
+                <>             
+                    <SearchBar 
+                        onSearch={(searchTerm: string) => {
+                            const lowercasedSearchTerm = searchTerm.toLowerCase();
+                          
+                            const newFilteredPhotos = searchTerm != null ? photos.filter((photo: Photo) => {
+                              return (
+                                photo.title.toLowerCase().includes(lowercasedSearchTerm) ||
+                                photo.albumTitle.toLowerCase().includes(lowercasedSearchTerm) ||
+                                photo.username.toLowerCase().includes(lowercasedSearchTerm)
+                              );
+                            }) : photos;
+
+                            setFilteredPhotos(newFilteredPhotos);
+                        }}
+                    />
+                    <PhotoContainer photos={filteredPhotos}/>
+                </>
+            ) 
             
             break;
         default:
             content = <div>Loading...</div>
             break;
     }
-
       
     return (
       <div className="gallery-container">        
+        <p className='gallery-title'>La Galeria</p>        
         {content}
       </div>
     );
