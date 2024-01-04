@@ -35,10 +35,11 @@ export default function GalleryContainer({ photos }: { photos: Photo[] }) {
             <PhotoContainer photos={currentPhotos}/>            
             {               
             filteredPhotos.length > currentPhotos.length && 
-                <>
-                    <p className="show-more-text">{currentPhotos.length} di {filteredPhotos.length}</p>
-                    <ShowMoreButton onClick={() => setCurrentPage(prevPageNumber => prevPageNumber + 1)} />
-                </>
+                <ShowMoreButton 
+                    onClick={() => setCurrentPage(prevPageNumber => prevPageNumber + 1)}
+                    currentLength={currentPhotos.length}
+                    filteredLength={filteredPhotos.length} 
+                />               
             }
             
         </>
