@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Photo } from "../../types/photo";
 import { Album } from "../../types/album";
 import { User } from "../../types/user";
+import GalleryContainer from "../GalleryContainer/GalleryContainer";
 import './Gallery.css';
-import PhotoContainer from "../PhotosContainer/PhotoContainer";
-import SearchBar from "../SearchBar/SearchBar";
-import { useState } from "react";
 
 /* Gallery Component, shows list of photo item cards filtered through top search bar */
 export default function Gallery() {
@@ -14,7 +12,6 @@ export default function Gallery() {
     let albums: Album[] = [];
     let users: User[] = [];
 
-    const [filteredPhotos, setFilteredPhotos] = useState(photos);
 
     const photoResponse = useQuery<Photo[] | null>({ 
         queryKey: ['photos'], 
@@ -26,11 +23,9 @@ export default function Gallery() {
                 
                 return data;
             } catch (error) {
-                console.log(error);
-    
+                console.log(error);    
                 throw new Error('Error fetching photos');
-            }
-    
+            }    
         } 
     })
 
@@ -44,8 +39,7 @@ export default function Gallery() {
                 
                 return data;
             } catch (error) {
-                console.log(error);
-    
+                console.log(error);    
                 throw new Error('Error fetching albums');
             }
     
@@ -62,11 +56,9 @@ export default function Gallery() {
                 
                 return data;
             } catch (error) {
-                console.log(error);
-    
+                console.log(error);    
                 throw new Error('Error fetching users');
-            }
-    
+            }    
         } 
     })
 
@@ -111,26 +103,7 @@ export default function Gallery() {
 
             });
 
-            content = (
-                <>             
-                    <SearchBar 
-                        onSearch={(searchTerm: string) => {
-                            const lowercasedSearchTerm = searchTerm.toLowerCase();
-                          
-                            const newFilteredPhotos = searchTerm != null ? photos.filter((photo: Photo) => {
-                              return (
-                                photo.title.toLowerCase().includes(lowercasedSearchTerm) ||
-                                photo.albumTitle.toLowerCase().includes(lowercasedSearchTerm) ||
-                                photo.username.toLowerCase().includes(lowercasedSearchTerm)
-                              );
-                            }) : photos;
-
-                            setFilteredPhotos(newFilteredPhotos);
-                        }}
-                    />
-                    <PhotoContainer photos={filteredPhotos}/>
-                </>
-            ) 
+            content = <GalleryContainer photos={photos} />;
             
             break;
         default:
@@ -139,7 +112,7 @@ export default function Gallery() {
     }
       
     return (
-      <div className="gallery-container">        
+      <div className="gallery-body">        
         <p className='gallery-title'>La Galeria</p>        
         {content}
       </div>

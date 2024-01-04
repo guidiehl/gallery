@@ -1,0 +1,30 @@
+.show-more-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #262626;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 12px 16px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+    margin: 0 0 64px 0;
+    outline: none;
+    &:hover {
+        background-color: #eeeeee;
+    }
+    &:active {
+        background-color: #f2f2f2;
+        border-color: #c6c6c6;
+    }
+    &:disabled {
+        background-color: #fff;
+        border-color: #e6e6e6;
+        color: #999;
+        cursor: default;
+    }
+}
+

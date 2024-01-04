@@ -1,30 +1,19 @@
-import React, { useState } from 'react';
+import { ChangeEvent } from 'react';
 import './SearchBar.css';
 
 interface SearchBarProps {
-  onSearch: (searchTerm: string) => void;
+    onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function SearchBar ({ onSearch }: SearchBarProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  return (
-  
-        <form className='search-bar' onSubmit={(event: React.FormEvent) => {
-                event.preventDefault();
-                onSearch(searchTerm);
-            }}>
-            
-            <input
-                className='search-bar-input'
-                placeholder="Cerca per nome della foto, album o username" 
-                type="text" 
-                value={searchTerm}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setSearchTerm(event.target.value);
-                }} 
-            />
-        </form>
-  
-  );
+export default function SearchBar ({ onSearchChange }: SearchBarProps) {
+    return (
+      <div className='search-bar'>
+        <input
+          className='search-bar-input'
+          placeholder="Cerca per nome della foto, album o username" 
+          type="search"
+          onChange={onSearchChange} 
+        />
+      </div>
+    );
 };
