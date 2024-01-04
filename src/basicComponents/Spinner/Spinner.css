@@ -1,0 +1,10 @@
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3c3c3c;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
