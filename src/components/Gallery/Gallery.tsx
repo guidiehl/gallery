@@ -1,113 +1,52 @@
-import { useQuery } from "@tanstack/react-query";
+
+import GalleryContainer from "../GalleryContainer/GalleryContainer";
+import Spinner from "../../basicComponents/Spinner/Spinner";
+import ErrorText from "../../basicComponents/ErrorText/ErrorText";
+import './Gallery.css';
+import { useCustomQuery } from "../../utils";
 import { Photo } from "../../types/photo";
 import { Album } from "../../types/album";
 import { User } from "../../types/user";
-import GalleryContainer from "../GalleryContainer/GalleryContainer";
-import './Gallery.css';
 
-/* Gallery Component, shows list of photo item cards filtered through top search bar */
 export default function Gallery() {
     
-    let photos: Photo[] = [];
-    let albums: Album[] = [];
-    let users: User[] = [];
-
-
-    const photoResponse = useQuery<Photo[] | null>({ 
-        queryKey: ['photos'], 
-        queryFn: async (): Promise<Photo[]> => {
-            try {
-                const res = await fetch('https://jsonplaceholder.typicode.com/photos');
-    
-                const data: Photo[] = await res.json();
-                
-                return data;
-            } catch (error) {
-                console.log(error);    
-                throw new Error('Error fetching photos');
-            }    
-        } 
-    })
-
-    const albumsResponse = useQuery<Album[] | null>({ 
-        queryKey: ['albums'], 
-        queryFn: async (): Promise<Album[]> => {
-            try {
-                const res = await fetch('https://jsonplaceholder.typicode.com/albums');
-    
-                const data: Album[] = await res.json();
-                
-                return data;
-            } catch (error) {
-                console.log(error);    
-                throw new Error('Error fetching albums');
-            }
-    
-        } 
-    })
-
-    const usersResponse = useQuery<User[] | null>({ 
-        queryKey: ['users'], 
-        queryFn: async (): Promise<User[]> => {
-            try {
-                const res = await fetch('https://jsonplaceholder.typicode.com/users');
-    
-                const data: User[] = await res.json();
-                
-                return data;
-            } catch (error) {
-                console.log(error);    
-                throw new Error('Error fetching users');
-            }    
-        } 
-    })
-
-    const isPending = photoResponse.isPending || photoResponse.isPending || photoResponse.isPending;
-    const isError = albumsResponse.isError || albumsResponse.isError || albumsResponse.isError;
-    const isSuccess = usersResponse.isSuccess && usersResponse.isSuccess && usersResponse.isSuccess;
+    const photoResponse = useCustomQuery<Photo>({url: 'https://jsonplaceholder.typicode.com/photos'});
+    const albumsResponse = useCustomQuery<Album>({url: 'https://jsonplaceholder.typicode.com/albums'});
+    const usersResponse = useCustomQuery<User>({url: 'https://jsonplaceholder.typicode.com/users'});
 
     let content: JSX.Element | null = null;
 
+    const isError = photoResponse.isError || albumsResponse.isError || usersResponse.isError;
+    const isPending = photoResponse.isPending || albumsResponse.isPending || usersResponse.isPending;
+    const isSuccess = photoResponse.isSuccess && albumsResponse.isSuccess && usersResponse.isSuccess;
+
     switch (true) {
-        case isPending:
-            photos = [];
-            content = <div>Loading...</div>;
-            break;
         case isError:
-            photos = [];
-            content = <div>Error fetching data</div>
+            content = <ErrorText error={ photoResponse.error ?? albumsResponse.error ?? usersResponse.error }/>;
+            break;
+        case isPending:             
+            content = <Spinner/>;
             break;
         case isSuccess:
-            if(photoResponse.data != null) {
-                photos = photoResponse.data;                
-            }
+            content = <GalleryContainer 
+                photos={photoResponse.data?.map((photo: Photo) => {
 
-            if (albumsResponse.data != null) {
-                albums = albumsResponse.data;
-            }
+                    const album = albumsResponse.data?.find((album: Album) => album.id === photo.albumId);
+                    const user = usersResponse.data?.find((user: User) => user.id === album?.userId);
+                
+                    return {
+                        ...photo,
+                        albumTitle: album?.title ?? 'Album non trovato',
+                        username: user?.username ?? 'Utente non trovato',
+                        userEmail: user?.email ?? 'Email non trovata',
+                        starRating: photo.rating ?? 0
+                    }
 
-            if (usersResponse.data != null) {
-                users = usersResponse.data;
-            }
-
-            photos = photos.map((photo: Photo) => {
-
-                const album = albums.find((album: Album) => album.id === photo.albumId);
-                const user = users.find((user: User) => user.id === album?.userId);
-            
-                return {
-                    ...photo,
-                    albumTitle: album?.title ?? 'Album non trovato',
-                    username: user?.username ?? 'Utente non trovato'
-                }
-
-            });
-
-            content = <GalleryContainer photos={photos} />;
-            
+                }) ?? []} 
+            />;            
             break;
         default:
-            content = <div>Loading...</div>
+            content = <Spinner/>;
             break;
     }
       

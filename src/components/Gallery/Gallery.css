@@ -1,12 +1,3 @@
-html {
-    overflow-y: scroll;
-}
-
-body { 
-    margin: 0;
-}
-
-
 .gallery-body {
     max-width: 792px;
     margin: 0px auto;

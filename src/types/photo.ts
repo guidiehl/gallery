@@ -7,5 +7,6 @@ export type Photo = {
     rating: number;
     albumTitle: string;
     username: string;
+    userEmail: string;
 }
 
