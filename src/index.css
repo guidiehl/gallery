@@ -2,8 +2,9 @@ html {
     overflow-y: scroll;
 }
 
-body { 
+body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .center-container {

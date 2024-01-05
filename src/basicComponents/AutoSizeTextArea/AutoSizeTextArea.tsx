@@ -5,9 +5,10 @@ type AutoSizeTextAreaProps = {
     textAreaRef: React.RefObject<HTMLTextAreaElement>,
     title: string,
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
+    isReadOnly?: boolean
 }
 
-export default function useAutoSizeTextArea({ textAreaRef, title, onChange }: AutoSizeTextAreaProps) {
+export default function useAutoSizeTextArea({ textAreaRef, title, onChange, isReadOnly }: AutoSizeTextAreaProps) {
     
     useEffect(() => {
         if (textAreaRef.current) {
@@ -25,5 +26,6 @@ export default function useAutoSizeTextArea({ textAreaRef, title, onChange }: Au
         onChange={onChange}
         rows={1}
         ref={textAreaRef}
+        readOnly={isReadOnly}
     />
 }
