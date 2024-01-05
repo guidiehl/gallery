@@ -8,6 +8,15 @@ import { Photo } from "../../types/photo";
 import { Album } from "../../types/album";
 import { User } from "../../types/user";
 
+/**
+ * The Gallery component is responsible for fetching and displaying a list of photos.
+ * It fetches data from three different endpoints: photos, albums, and users.
+ * It uses the custom hook `useCustomQuery` to fetch the data from these endpoints.
+ * The fetched data is then passed to the `GalleryContainer` component for display.
+ * If any of the requests result in an error, the `ErrorText` component is rendered with the error message.
+ * If any of the requests are still pending, the `Spinner` component is rendered to indicate loading state.
+ * If all the requests are successful, the `GalleryContainer` component is rendered with the photos data.
+ */
 export default function Gallery() {
     
     const photoResponse = useCustomQuery<Photo>({url: 'https://jsonplaceholder.typicode.com/photos'});
@@ -41,8 +50,8 @@ export default function Gallery() {
                         authorEmail: user?.email ?? 'Email non trovata',
                         starRating: photo.rating ?? 0
                     }
-
-                }) ?? []} 
+                // added random sort to make the gallery more interesting
+                }).sort(() => Math.random() - 0.5) ?? []} 
             />;            
             break;
         default:

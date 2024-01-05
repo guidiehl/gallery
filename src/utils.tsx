@@ -1,8 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 
+/**
+ * This function is used to get a user-friendly error message based on the status code of an HTTP response.
+ * It accepts an error object as a parameter, which can be of any type.
+ * It initializes an errorMessage string and a statusCode number.
+ * If the error is an instance of AxiosError, it extracts the status code from the error's response.
+ * It then uses a switch statement to map status codes to user-friendly error messages and returns it.
+ */
 export function getErrorMessage(error: unknown): string {
-    
+ 
     let errorMessage: string;
 
     let statusCode = 0;
@@ -43,6 +50,13 @@ export function getErrorMessage(error: unknown): string {
     return errorMessage;
 }
 
+/**
+ * This function is a custom hook that uses the useQuery hook to fetch data from a given URL.
+ * The query function is an async function that tries to get the data from the URL using the axios HTTP client.
+ * If the request is successful, it returns the data as an array of type T.
+ * If the request fails, it throws the error.
+ * The useQuery hook returns an object with the data.
+ */
 export function useCustomQuery<T>({ url }: { url: string; }) {
     return useQuery<T[] | null>({
       queryKey: [url],
@@ -58,4 +72,4 @@ export function useCustomQuery<T>({ url }: { url: string; }) {
         }
       },
     });
-  }
+}

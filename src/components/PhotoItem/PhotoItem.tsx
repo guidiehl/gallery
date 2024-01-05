@@ -3,6 +3,12 @@ import { Photo } from "../../types/photo";
 import PhotoModal from "../PhotoModal/PhotoModal";
 import './PhotoItem.css';
 
+/**
+ * The PhotoItem component is responsible for displaying a single photo.
+ * It receives a photo object as a prop and renders the photo's thumbnail, title, and author.
+ * The PhotoItem component also manages a modal that can be opened by clicking on the photo.
+ */
+
 interface PhotoItemProps {
     photo: Photo;
     onSave: (data: Photo) => void;
@@ -24,7 +30,8 @@ export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
                 <div>
                     <div className="photo-item-title">{photo.title}</div>
                     <div className="photo-item-subtitle">
-                        da <span className="data">{photo.author}</span>, album <span className="data">{photo.albumTitle}</span>
+                        da <span className="data">{photo.author}</span>, 
+                        album <span className="data">{photo.albumTitle}</span>
                     </div>
                 </div>
             </div>

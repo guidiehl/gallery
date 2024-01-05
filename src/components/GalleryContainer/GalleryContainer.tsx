@@ -5,6 +5,12 @@ import { Photo } from "../../types/photo";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import './GalleryContainer.css';
 
+/**
+ * The GalleryContainer component is responsible for displaying a list of photos in a grid format.
+ * It receives an array of photos as a prop and renders a PhotoGrid component with these photos.
+ * It shows 20 photos at a time and allows users to load more photos by clicking a ShowMoreButton.
+ * It renders a SearchBar component that allows users to search for photos by title, album or author.
+ */
 export default function GalleryContainer({ initialPhotos }: { initialPhotos: Photo[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,18 +18,11 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
 
     const photosPerPage = 20;
     const indexOfLastPhoto = currentPage * photosPerPage;
-
-    const lowercasedSearchTerm = searchTerm.toLowerCase();
                 
-    const filteredPhotos = searchTerm != null ? photos.filter((photo: Photo) => {
-        return (
-        photo.title.toLowerCase().includes(lowercasedSearchTerm) ||
-        photo.albumTitle.toLowerCase().includes(lowercasedSearchTerm) ||
-        photo.author.toLowerCase().includes(lowercasedSearchTerm)
-        );
-    }) : initialPhotos;
+    const filteredPhotos = searchTerm != null 
+        ? filterPhotos(photos,  searchTerm.toLowerCase()) 
+        : initialPhotos;
 
-    
     const currentPhotos = filteredPhotos.slice(0, indexOfLastPhoto);
 
     return (
@@ -52,4 +51,14 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
             
         </>
     );
+}
+
+function filterPhotos(photos: Photo[], searchTerm: string): Photo[] {
+   return photos.filter((photo: Photo) => {
+        return (
+            photo.title.toLowerCase().includes(searchTerm) ||
+            photo.albumTitle.toLowerCase().includes(searchTerm) ||
+            photo.author.toLowerCase().includes(searchTerm)
+        );
+    })    
 }

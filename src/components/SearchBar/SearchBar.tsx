@@ -1,6 +1,13 @@
 import { ChangeEvent } from 'react';
 import './SearchBar.css';
 
+/**
+ * The SearchBar component is responsible for providing a user interface for searching photos.
+ * It renders an input field where users can type their search queries.
+ * As the user types in the input field, the component's state is updated with the current value of the input field.
+ * The results of the search are then passed to a callback function received as a prop.
+ */
+
 interface SearchBarProps {
     onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }

@@ -6,6 +6,13 @@ import './PhotoModal.css';
 import AutoSizeTextArea from "../../basicComponents/AutoSizeTextArea/AutoSizeTextArea";
 import CustomButton from "../../basicComponents/CustomButton/CustomButton";
 
+/**
+ * The PhotoModal component is responsible for displaying a larger version of a photo in a modal.
+ * It receives a photo object and a boolean indicating whether the modal is open as props.
+ * The modal can be closed by clicking on a close button. When the modal is closed, it resets the title and rating to their initial values.
+ * The PhotoModal component renders the photo's image, author, author's email, and a star rating.
+ * The star rating can be updated by clicking on the stars. The new rating is stored in the component's state.
+ */
 interface PhotoModalProps {
     photo: Photo;
     isOpen: boolean;
@@ -26,16 +33,15 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
     const [rating, setRating] = useState(photo.rating);
     const [isReadOnly, setIsReadOnly] = useState(true);
 
-    const handleSave = () => {
-        toggleReadOnly();
-        onSave({ ...photo, title, rating });
-    };
 
-    const toggleReadOnly = () => {
-        setIsReadOnly(!isReadOnly);
-    };
-
+   
     useEffect(() => {
+        // This useEffect hook is used to manage the focus and content of a text area when it becomes editable.
+        // It runs every time the isReadOnly or title changes.
+        // If the text area is not read-only and the textAreaRef is currently pointing to an element,
+        // it first focuses the text area.
+        // Then, it clears the content of the text area and sets it to the current title.
+        
         if (!isReadOnly && textAreaRef.current) {
             const textarea = textAreaRef.current;
             textarea.focus();
@@ -49,7 +55,7 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
             hasCloseBtn={true} 
             isOpen={isOpen} 
             onClose={() => {
-                toggleReadOnly();
+                setIsReadOnly(!isReadOnly);
                 setTitle(photo.title);
                 setRating(photo.rating);
                 onClose();                
@@ -73,10 +79,8 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                         title={title} 
                         textAreaRef={textAreaRef}
                         isReadOnly={isReadOnly}
-                        onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-                            const val = evt.target?.value;
-                    
-                            setTitle(val);
+                        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {                                    
+                            setTitle(event.target?.value);
                         }}
                     />
                     <span className="photo-modal-title">Album</span>  
@@ -84,12 +88,13 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                     <div className="photo-modal-buttons-container">
                         <CustomButton 
                             style={{ marginRight: 8, backgroundColor: '#505050',  }} 
-                            onClick={toggleReadOnly} 
+                            onClick={() => { setIsReadOnly(!isReadOnly); }} 
                             text="Modifica Titolo" 
                         />
                         <CustomButton  
                             onClick={() => {
-                                handleSave();
+                                setIsReadOnly(!isReadOnly);                                
+                                onSave({ ...photo, title, rating });
                                 onClose();
                             }} 
                             text="Salva"
