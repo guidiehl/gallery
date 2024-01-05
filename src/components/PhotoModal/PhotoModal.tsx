@@ -1,7 +1,7 @@
 import { Photo } from "../../types/photo";
 import Modal from "../../basicComponents/Modal/Modal";
 import StarRating from "../StarRating/StartRating";
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import './PhotoModal.css';
 import AutoSizeTextArea from "../../basicComponents/AutoSizeTextArea/AutoSizeTextArea";
 import CustomButton from "../../basicComponents/CustomButton/CustomButton";
@@ -24,18 +24,36 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
 
     const [title, setTitle] = useState(photo.title);
     const [rating, setRating] = useState(photo.rating);
-    const [isReadOnly, setIsReadOnly] = useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(true);
 
     const handleSave = () => {
+        toggleReadOnly();
         onSave({ ...photo, title, rating });
     };
 
     const toggleReadOnly = () => {
         setIsReadOnly(!isReadOnly);
     };
+
+    useEffect(() => {
+        if (!isReadOnly && textAreaRef.current) {
+            const textarea = textAreaRef.current;
+            textarea.focus();
+            textarea.value = '';
+            textarea.value = title;
+        }
+      }, [isReadOnly, title]);
     
     return (
-        <Modal hasCloseBtn={true} isOpen={isOpen} onClose={onClose} style={customModalStyle}>
+        <Modal 
+            hasCloseBtn={true} 
+            isOpen={isOpen} 
+            onClose={() => {
+                onClose();
+                toggleReadOnly();
+            }} 
+            style={customModalStyle}
+            >
             <div className="photo-modal-container">
                 <img className="photo-modal-image" src={photo.url} alt={photo.title} />
                 <div className="photo-modal-data-container">
@@ -60,11 +78,20 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                         }}
                     />
                     <span className="photo-modal-title">Album</span>  
-                    <span className="edit"><a href="#non">Edit</a></span>
                     <span className="photo-modal-album">{photo.albumTitle}</span>
                     <div className="photo-modal-buttons-container">
-                        <CustomButton style={{ marginRight: 8 }} onClick={toggleReadOnly} text="Modifica Titolo" />
-                        <CustomButton  onClick={handleSave} text="Salva"/>
+                        <CustomButton 
+                            style={{ marginRight: 8, backgroundColor: '#505050',  }} 
+                            onClick={toggleReadOnly} 
+                            text="Modifica Titolo" 
+                        />
+                        <CustomButton  
+                            onClick={() => {
+                                handleSave();
+                                onClose();
+                            }} 
+                            text="Salva"
+                        />
                     </div>
                 </div>
             </div>
@@ -72,3 +99,4 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
     );
 };
 
+ 

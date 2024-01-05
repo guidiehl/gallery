@@ -5,9 +5,10 @@ import { Photo } from "../../types/photo";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import './GalleryContainer.css';
 
-export default function GalleryContainer({ photos }: { photos: Photo[] }) {
+export default function GalleryContainer({ initialPhotos }: { initialPhotos: Photo[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [photos, setPhotos] = useState(initialPhotos);
 
     const photosPerPage = 20;
     const indexOfLastPhoto = currentPage * photosPerPage;
@@ -20,7 +21,7 @@ export default function GalleryContainer({ photos }: { photos: Photo[] }) {
         photo.albumTitle.toLowerCase().includes(lowercasedSearchTerm) ||
         photo.username.toLowerCase().includes(lowercasedSearchTerm)
         );
-    }) : photos;
+    }) : initialPhotos;
 
     
     const currentPhotos = filteredPhotos.slice(0, indexOfLastPhoto);
@@ -32,7 +33,14 @@ export default function GalleryContainer({ photos }: { photos: Photo[] }) {
                     setSearchTerm(event.target.value);
                 }}
             />
-            <PhotoContainer photos={currentPhotos}/>            
+            <PhotoContainer 
+                photos={currentPhotos} 
+                onSave={(updatedPhoto: Photo) => {
+                    setPhotos(prevPhotos => prevPhotos.map(photo => 
+                        photo.id === updatedPhoto.id ? updatedPhoto : photo
+                    ));
+                }}
+            />            
             {               
             filteredPhotos.length > currentPhotos.length && 
                 <ShowMoreButton 

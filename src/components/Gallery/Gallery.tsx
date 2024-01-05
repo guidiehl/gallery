@@ -29,7 +29,7 @@ export default function Gallery() {
             break;
         case isSuccess:
             content = <GalleryContainer 
-                photos={photoResponse.data?.map((photo: Photo) => {
+                initialPhotos={photoResponse.data?.map((photo: Photo) => {
 
                     const album = albumsResponse.data?.find((album: Album) => album.id === photo.albumId);
                     const user = usersResponse.data?.find((user: User) => user.id === album?.userId);

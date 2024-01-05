@@ -3,7 +3,12 @@ import { Photo } from "../../types/photo";
 import PhotoModal from "../PhotoModal/PhotoModal";
 import './PhotoItem.css';
 
-export default function PhotoItem({ photo }: { photo: Photo }) {
+interface PhotoItemProps {
+    photo: Photo;
+    onSave: (data: Photo) => void;
+}
+
+export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
     const [isPhotoModalOpen, setPhotoModalOpen] = useState<boolean>(false);
     
     return (
@@ -20,7 +25,10 @@ export default function PhotoItem({ photo }: { photo: Photo }) {
             <PhotoModal
                 photo={photo}
                 isOpen={isPhotoModalOpen}
-                onSave={(data: Photo): void => { setPhotoModalOpen(false); }}
+                onSave={(data: Photo): void => { 
+                    setPhotoModalOpen(false);
+                    onSave(data); 
+                }}
                 onClose={() => { setPhotoModalOpen(false); }} 
             />
         </>
