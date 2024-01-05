@@ -1,0 +1,51 @@
+
+.photo-modal-data-container {
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-modal-image {
+    width: 100%;
+    object-fit: contain;
+}
+
+
+.photo-modal-user {
+    font-size: 32px;
+    font-weight: bold;
+    display: block;
+}
+.photo-modal-email {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.photo-modal-title {
+    font-size: 14;
+    font-weight: bold;
+    
+    margin: 24px 0 8px 0;
+    line-height: 0;
+}
+
+.photo-modal-album {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.photo-modal-top-row {  
+    display: flex;
+    justify-content: space-between;
+    align-items: top;   
+}
+
