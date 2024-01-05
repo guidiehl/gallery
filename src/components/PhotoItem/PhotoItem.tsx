@@ -14,12 +14,19 @@ export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
     return (
         <>
             <div 
+                className="photo-item-container"
                 onClick={() => { 
                     console.log('PhotoItem onClick')
                     setPhotoModalOpen(true); 
                 }}
             >
-                <img className="photo-item-image" src={photo.thumbnailUrl} alt={photo.title} />                            
+                <img className="photo-item-image" src={photo.thumbnailUrl} alt={photo.title} />
+                <div>
+                    <div className="photo-item-title">{photo.title}</div>
+                    <div className="photo-item-subtitle">
+                        da <span className="data">{photo.author}</span>, album <span className="data">{photo.albumTitle}</span>
+                    </div>
+                </div>
             </div>
 
             <PhotoModal
