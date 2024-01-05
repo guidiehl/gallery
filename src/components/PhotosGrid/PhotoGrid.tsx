@@ -1,14 +1,14 @@
 import { Photo } from "../../types/photo";
 import PhotoItem from "../PhotoItem/PhotoItem";
-import './PhotoContainer.css';
+import './PhotoGrid.css';
 
-interface PhotoContainerProps {
+interface PhotoGridProps {
     photos: Photo[];
     onSave: (data: Photo) => void;
 }
 
 
-export default function PhotoContainer({ photos, onSave }: PhotoContainerProps) {
+export default function PhotoGrid({ photos, onSave }: PhotoGridProps) {
     return <div className="photos-container"> {   
         photos.map((photo: Photo) => {
             return <PhotoItem 

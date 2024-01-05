@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import PhotoContainer from "../PhotosContainer/PhotoContainer";
+import PhotoGrid from "../PhotosGrid/PhotoGrid";
 import SearchBar from "../SearchBar/SearchBar";
 import { Photo } from "../../types/photo";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
@@ -19,7 +19,7 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
         return (
         photo.title.toLowerCase().includes(lowercasedSearchTerm) ||
         photo.albumTitle.toLowerCase().includes(lowercasedSearchTerm) ||
-        photo.username.toLowerCase().includes(lowercasedSearchTerm)
+        photo.author.toLowerCase().includes(lowercasedSearchTerm)
         );
     }) : initialPhotos;
 
@@ -33,7 +33,7 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
                     setSearchTerm(event.target.value);
                 }}
             />
-            <PhotoContainer 
+            <PhotoGrid 
                 photos={currentPhotos} 
                 onSave={(updatedPhoto: Photo) => {
                     setPhotos(prevPhotos => prevPhotos.map(photo => 

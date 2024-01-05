@@ -10,7 +10,7 @@ export default function SearchBar ({ onSearchChange }: SearchBarProps) {
       <div className='search-bar'>
         <input
           className='search-bar-input'
-          placeholder="Cerca per nome della foto, album o username" 
+          placeholder="Cerca per nome della foto, album o autore" 
           type="search"
           onChange={onSearchChange} 
         />

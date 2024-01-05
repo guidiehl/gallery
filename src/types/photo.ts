@@ -6,7 +6,7 @@ export type Photo = {
     thumbnailUrl: string;
     rating: number;
     albumTitle: string;
-    username: string;
-    userEmail: string;
+    author: string;
+    authorEmail: string;
 }
 

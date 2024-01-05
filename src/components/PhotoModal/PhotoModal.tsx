@@ -59,8 +59,8 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                 <div className="photo-modal-data-container">
                     <div className="photo-modal-top-row">
                         <div style={{ flex: 1 }}>
-                            <span className="photo-modal-user">by {photo.username}</span>
-                            <span className="photo-modal-email">{photo.userEmail}</span>
+                            <span className="photo-modal-user">da {photo.author}</span>
+                            <span className="photo-modal-email">{photo.authorEmail}</span>
                         </div>
                         <StarRating rating={rating} onRatingChange={setRating} />
                     </div>

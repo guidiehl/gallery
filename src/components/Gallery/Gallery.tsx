@@ -37,8 +37,8 @@ export default function Gallery() {
                     return {
                         ...photo,
                         albumTitle: album?.title ?? 'Album non trovato',
-                        username: user?.username ?? 'Utente non trovato',
-                        userEmail: user?.email ?? 'Email non trovata',
+                        author: user?.username ?? 'Utente non trovato',
+                        authorEmail: user?.email ?? 'Email non trovata',
                         starRating: photo.rating ?? 0
                     }
 
