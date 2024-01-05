@@ -37,8 +37,15 @@ export default function Modal ({ isOpen, hasCloseBtn = true, onClose, style, chi
         }
     }, [isModalOpen]);
   
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
+        if (event.key === "Escape") {
+            handleCloseModal();
+        }
+    };
+
     return (
-        <dialog ref={modalRef} className="modal" style={style}>
+        <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal" style={style}>
             { hasCloseBtn && (<span className="modal-close" onClick={handleCloseModal}/>)}
             {children}
         </dialog>

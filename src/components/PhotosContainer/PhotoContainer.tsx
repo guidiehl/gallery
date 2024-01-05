@@ -5,7 +5,7 @@ import './PhotoContainer.css';
 export default function PhotoContainer({ photos }: { photos: Photo[] }) {
     return <div className="photos-container"> {   
         photos.map((photo: Photo) => {
-            return <PhotoItem photo={photo}/>
+            return <PhotoItem key={photo.id} photo={photo}/>
         })
     }</div>
 }

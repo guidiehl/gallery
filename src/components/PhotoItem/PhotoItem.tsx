@@ -8,7 +8,12 @@ export default function PhotoItem({ photo }: { photo: Photo }) {
     
     return (
         <>
-            <div key={photo.id} onClick={() => { setPhotoModalOpen(true); }}>
+            <div 
+                onClick={() => { 
+                    console.log('PhotoItem onClick')
+                    setPhotoModalOpen(true); 
+                }}
+            >
                 <img className="photo-item-image" src={photo.thumbnailUrl} alt={photo.title} />                            
             </div>
 
