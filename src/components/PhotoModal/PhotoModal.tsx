@@ -49,8 +49,10 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
             hasCloseBtn={true} 
             isOpen={isOpen} 
             onClose={() => {
-                onClose();
                 toggleReadOnly();
+                setTitle(photo.title);
+                setRating(photo.rating);
+                onClose();                
             }} 
             style={customModalStyle}
             >
