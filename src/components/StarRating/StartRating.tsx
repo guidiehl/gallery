@@ -1,25 +1,26 @@
 
-import React from 'react';
-
 interface StarRatingProps {
   rating: number;
   onRatingChange: (rating: number) => void;
+}
+
+function Star({ filled }: { filled: boolean }) {
+  return <span style={{ fontSize: '24px' }}>{filled ? '★' : '☆'}</span>;
 }
 
 export default function StarRating({ rating, onRatingChange }: StarRatingProps) {
   const stars = [1, 2, 3, 4, 5];
 
   const handleStarClick = (star: number, isHalf: boolean) => {
-    console.log('star', star, 'isHalf', isHalf );
     onRatingChange(isHalf ? star - 0.5 : star);
   };
 
   return (
     <div>
       {stars.map(star => (
-        <div key={star} style={{ display: 'inline-block', position: 'relative', cursor: 'pointer' }}>
+        <div key={star} className="star-rating-container">
           <div
-            style={{ position: 'absolute', width: '50%', overflow: 'hidden' }}
+            className="star-rating-half-star"
             onClick={() => handleStarClick(star, true)}
           >
             <Star filled={rating >= star - 0.5} />
@@ -33,6 +34,3 @@ export default function StarRating({ rating, onRatingChange }: StarRatingProps) 
   );
 }
 
-function Star({ filled }: { filled: boolean }) {
-  return <span style={{ fontSize: '24px' }}>{filled ? '★' : '☆'}</span>;
-}

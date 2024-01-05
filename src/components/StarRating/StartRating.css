@@ -1,0 +1,12 @@
+
+.star-rating-container { 
+    display: 'inline-block';
+    position: 'relative'; 
+    cursor: 'pointer';
+}
+
+.star-rating-half-star { 
+    position: 'absolute'; 
+    width: '50%'; 
+    overflow: 'hidden';
+}
