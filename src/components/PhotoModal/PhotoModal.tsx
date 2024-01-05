@@ -4,6 +4,7 @@ import StarRating from "../StarRating/StartRating";
 import {  useRef, useState } from "react";
 import './PhotoModal.css';
 import AutoSizeTextArea from "../../basicComponents/AutoSizeTextArea/AutoSizeTextArea";
+import CustomButton from "../../basicComponents/CustomButton/CustomButton";
 
 interface PhotoModalProps {
     photo: Photo;
@@ -23,9 +24,14 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
 
     const [title, setTitle] = useState(photo.title);
     const [rating, setRating] = useState(photo.rating);
+    const [isReadOnly, setIsReadOnly] = useState(false);
 
     const handleSave = () => {
         onSave({ ...photo, title, rating });
+    };
+
+    const toggleReadOnly = () => {
+        setIsReadOnly(!isReadOnly);
     };
     
     return (
@@ -46,14 +52,20 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                     <AutoSizeTextArea 
                         title={title} 
                         textAreaRef={textAreaRef}
+                        isReadOnly={isReadOnly}
                         onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
                             const val = evt.target?.value;
                     
                             setTitle(val);
                         }}
                     />
-                    <span className="photo-modal-title">Album</span>
+                    <span className="photo-modal-title">Album</span>  
+                    <span className="edit"><a href="#non">Edit</a></span>
                     <span className="photo-modal-album">{photo.albumTitle}</span>
+                    <div className="photo-modal-buttons-container">
+                        <CustomButton style={{ marginRight: 8 }} onClick={toggleReadOnly} text="Modifica Titolo" />
+                        <CustomButton  onClick={handleSave} text="Salva"/>
+                    </div>
                 </div>
             </div>
         </Modal>

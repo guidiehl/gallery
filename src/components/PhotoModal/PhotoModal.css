@@ -1,4 +1,3 @@
-
 .photo-modal-data-container {
     padding: 8px 16px;
     display: flex;
@@ -21,6 +20,7 @@
     font-weight: bold;
     display: block;
 }
+
 .photo-modal-email {
     font-size: 14px;
     color: #666;
@@ -32,20 +32,25 @@
 .photo-modal-title {
     font-size: 14;
     font-weight: bold;
-    
-    margin: 24px 0 8px 0;
+    margin: 36px 0 8px 0;
     line-height: 0;
 }
 
 .photo-modal-album {
     font-size: 14px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 24px;
 }
 
-.photo-modal-top-row {  
+.photo-modal-top-row {
     display: flex;
     justify-content: space-between;
-    align-items: top;   
+    align-items: top;
 }
 
+.photo-modal-buttons-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 8px;
+}
