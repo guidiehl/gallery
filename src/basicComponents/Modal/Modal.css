@@ -1,40 +1,42 @@
 .modal {
     border: 0;
-    border-radius: 16px;
+    border-radius: 15px;
     position: fixed;
     box-shadow: hsl(0 0% 0% / 10%) 0 0 0.5rem 0.25rem;
 }
 
 .modal::backdrop {
-  background: hsl(0 0% 0% / 50%);
+    background: hsl(0 0% 0% / 50%);
 }
-  
+
 .modal-close {
     position: absolute;
     right: 16px;
     top: 16px;
-    width: 32px;
-    height: 32px;
-    opacity: 0.3;
-    
+    width: 24px;
+    height: 24px;
+    background-color: whitesmoke;
+    border-radius: 30px;
+    cursor: pointer;
+    padding: 4px;
 }
 
-.modal-close:hover {
-    opacity: 1;
-}
 
 .modal:focus {
     outline: none;
 }
 
-.modal-close:before, .modal-close:after {
+.modal-close:before,
+.modal-close:after {
     position: absolute;
-    left: 16px;
+    left: 15px;
     content: ' ';
-    height: 32px;
-    width: 2px;
+    height: 24px;
+    width: 3px;
     background-color: #333;
+
 }
+
 .modal-close:before {
     transform: rotate(45deg);
 }
