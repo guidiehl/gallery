@@ -2,6 +2,7 @@
     padding: 8px 16px;
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 
 .photo-modal-container {
@@ -12,6 +13,7 @@
 .photo-modal-image {
     width: 100%;
     object-fit: contain;
+    border-top-right-radius: 0%;
 }
 
 
@@ -45,7 +47,6 @@
 .photo-modal-top-row {
     display: flex;
     justify-content: space-between;
-    align-items: top;
 }
 
 .photo-modal-buttons-container {
