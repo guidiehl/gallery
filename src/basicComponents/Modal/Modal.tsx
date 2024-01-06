@@ -9,52 +9,21 @@ import styles from './Modal.module.css';
  */
 
 interface ModalProps {
-    isOpen: boolean;
-    hasCloseBtn?: boolean;
-    onClose?: () => void;
+    setIsOpen: (isOpen: boolean) => void;
     children: React.ReactNode;
-    style?: React.CSSProperties;
+    style: React.CSSProperties;
 };
   
-export default function Modal ({ isOpen, hasCloseBtn = true, onClose, style, children} : ModalProps) {
-    const [isModalOpen, setModalOpen] = useState(isOpen);
-    
-    const modalRef = useRef<HTMLDialogElement | null>(null);
-  
-    const handleCloseModal = () => {
-        if (onClose) {
-          onClose();
-        }
-        setModalOpen(false);
-    };
-    
-    useEffect(() => {
-        setModalOpen(isOpen);
-    }, [isOpen]);
-  
-    useEffect(() => {
-        const modalElement = modalRef.current;
-  
-        if (modalElement) {
-            if (isModalOpen) {
-              modalElement.showModal();
-            } else {
-              modalElement.close();
-            }
-        }
-    }, [isModalOpen]);
-  
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
-        if (event.key === "Escape") {
-            handleCloseModal();
-        }
-    };
-
+export default function Modal ({ setIsOpen, children, style} : ModalProps) {
     return (
-        <dialog ref={modalRef} onKeyDown={handleKeyDown} className={styles['modal']} style={style}>
-            { hasCloseBtn && (<span className={styles['modal-close']} onClick={handleCloseModal}/>)}
-            {children}
-        </dialog>
+        <>
+            <div className={styles['dark-background']} onClick={() => setIsOpen(false)} />
+            <div className={styles['centered']}>
+                    <div className={styles['modal']} style={style}>   
+                        <span className={styles['modal-close']} onClick={() => setIsOpen(false)}/>            
+                        {children}
+                    </div>
+            </div>                      
+        </>
     );
   };

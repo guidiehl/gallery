@@ -15,17 +15,18 @@ import styles from './PhotoModal.module.css';
  */
 interface PhotoModalProps {
     photo: Photo;
-    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
     onSave: (data: Photo) => void;
-    onClose: () => void;
 }
 
 const customModalStyle: React.CSSProperties = {
     padding: 0,
     maxWidth: 448,
+    minWidth: 320,
+    width: '100%',
 }
 
-export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoModalProps)  {
+export default function PhotoModal({ onSave, photo, setIsOpen, } : PhotoModalProps)  {
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -49,14 +50,14 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
       }, [isReadOnly, title]);
     
     return (
-        <Modal 
-            hasCloseBtn={true} 
-            isOpen={isOpen} 
-            onClose={() => {
-                setIsReadOnly(true);   
-                setTitle(photo.title);
-                setRating(photo.rating);
-                onClose();                
+        <Modal
+            setIsOpen={(value) => {
+                setIsOpen(value);
+                if(value === false) {
+                    setIsReadOnly(true);   
+                    setTitle(photo.title);
+                    setRating(photo.rating);
+                }             
             }} 
             style={customModalStyle}
             >
@@ -94,8 +95,7 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                             data-testid="save-button"
                             onClick={() => {                             
                                 setIsReadOnly(true);                                                           
-                                onSave({ ...photo, title, rating });
-                                onClose();
+                                onSave({ ...photo, title, rating });                                
                             }} 
                             text="Salva"
                         />

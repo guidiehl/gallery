@@ -9,7 +9,7 @@ import styles from "./ErrorText.module.css";
 export default function ErrorText({ error }: { error: Error | null}) {
 
     return (
-        <div className={styles["center-container"]}>
+        <div className="center-container" >
             <p className={styles["error-text"]}>{getErrorMessage(error)}</p>
         </div>
     );

@@ -15,15 +15,16 @@ interface PhotoItemProps {
 }
 
 export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
-    const [isPhotoModalOpen, setPhotoModalOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState(false);
     
     return (
         <>
             <div 
+                data-testid="photo-item"
                 className={styles["photo-item-container"]}
                 onClick={() => { 
                     console.log('PhotoItem onClick')
-                    setPhotoModalOpen(true); 
+                    setIsOpen(true); 
                 }}
             >
                 <img className={styles["photo-item-image"]}
@@ -37,15 +38,16 @@ export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
                 </div>
             </div>
 
-            <PhotoModal
+            {
+            isOpen && <PhotoModal
                 photo={photo}
-                isOpen={isPhotoModalOpen}
+                setIsOpen={setIsOpen}
                 onSave={(data: Photo): void => { 
-                    setPhotoModalOpen(false);
                     onSave(data); 
+                    setIsOpen(false);
                 }}
-                onClose={() => { setPhotoModalOpen(false); }} 
             />
+            }
         </>
     )
     

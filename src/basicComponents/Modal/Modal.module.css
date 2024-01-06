@@ -1,12 +1,25 @@
 .modal {
     border: 0;
     border-radius: 15px;
-    position: fixed;
-    box-shadow: hsl(0 0% 0% / 10%) 0 0 0.5rem 0.25rem;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);    
+    overflow: hidden;
 }
 
-.modal::backdrop {
-    background: hsl(0 0% 0% / 50%);
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dark-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.75);
+    display: flex;
 }
 
 .modal-close {
@@ -19,11 +32,6 @@
     border-radius: 30px;
     cursor: pointer;
     padding: 4px;
-}
-
-
-.modal:focus {
-    outline: none;
 }
 
 .modal-close:before,
@@ -44,3 +52,6 @@
 .modal-close:after {
     transform: rotate(-45deg);
 }
+
+
+  
