@@ -2,9 +2,9 @@ import { Photo } from "../../types/photo";
 import Modal from "../../basicComponents/Modal/Modal";
 import StarRating from "../StarRating/StartRating";
 import {  useEffect, useRef, useState } from "react";
-import './PhotoModal.css';
 import AutoSizeTextArea from "../../basicComponents/AutoSizeTextArea/AutoSizeTextArea";
 import CustomButton from "../../basicComponents/CustomButton/CustomButton";
+import styles from './PhotoModal.module.css';
 
 /**
  * The PhotoModal component is responsible for displaying a larger version of a photo in a modal.
@@ -55,25 +55,25 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
             hasCloseBtn={true} 
             isOpen={isOpen} 
             onClose={() => {
-                setIsReadOnly(!isReadOnly);
+                setIsReadOnly(false);   
                 setTitle(photo.title);
                 setRating(photo.rating);
                 onClose();                
             }} 
             style={customModalStyle}
             >
-            <div className="photo-modal-container">
-                <img className="photo-modal-image" src={photo.url} alt={photo.title} />
-                <div className="photo-modal-data-container">
-                    <div className="photo-modal-top-row">
+            <div className={styles["photo-modal-container"]}>
+                <img className={styles["photo-modal-image"]} src={photo.url} alt={photo.title} />
+                <div className={styles["photo-modal-data-container"]}>
+                    <div className={styles["photo-modal-top-row"]}>
                         <div style={{ flex: 1 }}>
-                            <span className="photo-modal-user">da {photo.author}</span>
-                            <span className="photo-modal-email">{photo.authorEmail}</span>
+                            <span className={styles["photo-modal-user"]}>da {photo.author}</span>
+                            <span className={styles["photo-modal-email"]}>{photo.authorEmail}</span>
                         </div>
                         <StarRating rating={rating} onRatingChange={setRating} />
                     </div>
               
-                    <span className="photo-modal-title">Titolo</span>
+                    <span className={styles["photo-modal-title"]}>Titolo</span>
              
                     <AutoSizeTextArea 
                         title={title} 
@@ -83,17 +83,19 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                             setTitle(event.target?.value);
                         }}
                     />
-                    <span className="photo-modal-title">Album</span>  
-                    <span className="photo-modal-album">{photo.albumTitle}</span>
-                    <div className="photo-modal-buttons-container">
+                    <span className={styles["photo-modal-title"]}>Album</span>  
+                    <span className={styles["photo-modal-album"]}>{photo.albumTitle}</span>
+                    <div className={styles["photo-modal-buttons-container"]}>
                         <CustomButton 
+                            data-testid="edit-button"
                             style={{ marginRight: 8, backgroundColor: '#505050',  }} 
                             onClick={() => { setIsReadOnly(!isReadOnly); }} 
                             text="Modifica Titolo" 
                         />
                         <CustomButton  
-                            onClick={() => {
-                                setIsReadOnly(!isReadOnly);                                
+                            data-testid="save-button"
+                            onClick={() => {                             
+                                setIsReadOnly(false);                                                           
                                 onSave({ ...photo, title, rating });
                                 onClose();
                             }} 

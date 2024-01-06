@@ -1,5 +1,5 @@
 import { getErrorMessage } from "../../utils";
-import "./ErrorText.css";
+import styles from "./ErrorText.module.css";
 
 /**
  * The ErrorText component is responsible for displaying error messages.
@@ -9,8 +9,8 @@ import "./ErrorText.css";
 export default function ErrorText({ error }: { error: Error | null}) {
 
     return (
-        <div className="center-container">
-            <p className="error-text">{getErrorMessage(error)}</p>
+        <div className={styles["center-container"]}>
+            <p className={styles["error-text"]}>{getErrorMessage(error)}</p>
         </div>
     );
 }

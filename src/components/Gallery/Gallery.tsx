@@ -2,7 +2,7 @@
 import GalleryContainer from "../GalleryContainer/GalleryContainer";
 import Spinner from "../../basicComponents/Spinner/Spinner";
 import ErrorText from "../../basicComponents/ErrorText/ErrorText";
-import './Gallery.css';
+import styles from './Gallery.module.css';
 import { useCustomQuery } from "../../utils";
 import { Photo } from "../../types/photo";
 import { Album } from "../../types/album";
@@ -17,42 +17,32 @@ import { User } from "../../types/user";
  * If any of the requests are still pending, the `Spinner` component is rendered to indicate loading state.
  * If all the requests are successful, the `GalleryContainer` component is rendered with the photos data.
  */
-export default function Gallery() {
-    
-    const photoResponse = useCustomQuery<Photo>({url: 'https://jsonplaceholder.typicode.com/photos'});
+export default function Gallery() {    
+    const photosResponse = useCustomQuery<Photo>({url: 'https://jsonplaceholder.typicode.com/photos'});
     const albumsResponse = useCustomQuery<Album>({url: 'https://jsonplaceholder.typicode.com/albums'});
     const usersResponse = useCustomQuery<User>({url: 'https://jsonplaceholder.typicode.com/users'});
-
+   
+    const isError = photosResponse.isError || albumsResponse.isError || usersResponse.isError;
+    const isPending = photosResponse.isPending || albumsResponse.isPending || usersResponse.isPending;
+    const isSuccess = photosResponse.isSuccess && albumsResponse.isSuccess && usersResponse.isSuccess;
+    
     let content: JSX.Element | null = null;
-
-    const isError = photoResponse.isError || albumsResponse.isError || usersResponse.isError;
-    const isPending = photoResponse.isPending || albumsResponse.isPending || usersResponse.isPending;
-    const isSuccess = photoResponse.isSuccess && albumsResponse.isSuccess && usersResponse.isSuccess;
 
     switch (true) {
         case isError:
-            content = <ErrorText error={ photoResponse.error ?? albumsResponse.error ?? usersResponse.error }/>;
+            content = <ErrorText error={ 
+                photosResponse.error ?? albumsResponse.error ?? usersResponse.error 
+            }/>;
             break;
         case isPending:             
             content = <Spinner/>;
             break;
         case isSuccess:
-            content = <GalleryContainer 
-                initialPhotos={photoResponse.data?.map((photo: Photo) => {
-
-                    const album = albumsResponse.data?.find((album: Album) => album.id === photo.albumId);
-                    const user = usersResponse.data?.find((user: User) => user.id === album?.userId);
-                
-                    return {
-                        ...photo,
-                        albumTitle: album?.title ?? 'Album non trovato',
-                        author: user?.username ?? 'Utente non trovato',
-                        authorEmail: user?.email ?? 'Email non trovata',
-                        starRating: photo.rating ?? 0
-                    }
-                // added random sort to make the gallery more interesting
-                }).sort(() => Math.random() - 0.5) ?? []} 
-            />;            
+            content = <GalleryContainer initialPhotos={ getInitialPhotos(
+                photosResponse.data ?? [],
+                albumsResponse.data ?? [],
+                usersResponse.data ?? []
+            ) } />;            
             break;
         default:
             content = <Spinner/>;
@@ -60,9 +50,26 @@ export default function Gallery() {
     }
       
     return (
-      <div className="gallery-body">        
-        <p className='gallery-title'>La Galeria</p>        
+      <div className={styles["gallery-body"]}>        
+        <p className={styles['gallery-title']}>La Galeria</p>        
         {content}
       </div>
     );
+}
+
+export function getInitialPhotos( photos : Photo[] ,albums: Album[], users: User[] ) : Photo[] {
+    return photos.map((photo: Photo) => {
+
+        const album = albums.find((album: Album) => album.id === photo.albumId);
+        const user = users.find((user: User) => user.id === album?.userId);
+    
+        return {
+            ...photo,
+            albumTitle: album?.title ?? 'Album non trovato',
+            author: user?.username ?? 'Utente non trovato',
+            authorEmail: user?.email ?? 'Email non trovata',
+            starRating: photo.rating ?? 0
+        }
+    // added random sort to make the gallery more interesting
+    }).sort(() => Math.random() - 0.5)
 }

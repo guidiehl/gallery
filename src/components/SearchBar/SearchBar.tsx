@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import './SearchBar.css';
+import styles from './SearchBar.module.css';
 
 /**
  * The SearchBar component is responsible for providing a user interface for searching photos.
@@ -14,9 +14,9 @@ interface SearchBarProps {
 
 export default function SearchBar ({ onSearchChange }: SearchBarProps) {
     return (
-      <div className='search-bar'>
+      <div className={styles['search-bar']}>
         <input
-          className='search-bar-input'
+          className={styles['search-bar-input']}
           placeholder="Cerca per nome della foto, album o autore" 
           type="search"
           onChange={onSearchChange} 

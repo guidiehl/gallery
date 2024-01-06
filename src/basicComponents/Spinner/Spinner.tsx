@@ -1,4 +1,4 @@
-import './Spinner.css';
+import styles from './Spinner.module.css';
 
 /**
  * The Spinner component is responsible for displaying a loading spinner.
@@ -8,8 +8,8 @@ import './Spinner.css';
 export default function Spinner() {
 
 return (
-    <div className="center-container">
-        <span className="loader"></span>
+    <div className={styles["center-container"]}>
+        <span className={styles["loader"]}></span>
     </div>
 );
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Photo } from "../../types/photo";
 import PhotoModal from "../PhotoModal/PhotoModal";
-import './PhotoItem.css';
+import styles from './PhotoItem.module.css';
 
 /**
  * The PhotoItem component is responsible for displaying a single photo.
@@ -20,18 +20,19 @@ export default function PhotoItem({ photo, onSave }: PhotoItemProps) {
     return (
         <>
             <div 
-                className="photo-item-container"
+                className={styles["photo-item-container"]}
                 onClick={() => { 
                     console.log('PhotoItem onClick')
                     setPhotoModalOpen(true); 
                 }}
             >
-                <img className="photo-item-image" src={photo.thumbnailUrl} alt={photo.title} />
+                <img className={styles["photo-item-image"]}
+                 src={photo.thumbnailUrl} alt={photo.title} />
                 <div>
-                    <div className="photo-item-title">{photo.title}</div>
-                    <div className="photo-item-subtitle">
-                        da <span className="data">{photo.author}</span>, 
-                        album <span className="data">{photo.albumTitle}</span>
+                    <div className={styles["photo-item-title"]}>{photo.title}</div>
+                    <div className={styles["photo-item-subtitle"]}>
+                        da <span className={styles["data"]}>{photo.author}</span>, 
+                        album <span className={styles["data"]}>{photo.albumTitle}</span>
                     </div>
                 </div>
             </div>

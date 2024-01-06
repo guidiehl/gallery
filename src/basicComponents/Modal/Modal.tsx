@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import './Modal.css';
+import styles from './Modal.module.css';
 
 /**
  * The Modal receives the content to be displayed, a boolean indicating whether the modal is open, 
@@ -52,8 +52,8 @@ export default function Modal ({ isOpen, hasCloseBtn = true, onClose, style, chi
     };
 
     return (
-        <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal" style={style}>
-            { hasCloseBtn && (<span className="modal-close" onClick={handleCloseModal}/>)}
+        <dialog ref={modalRef} onKeyDown={handleKeyDown} className={styles['modal']} style={style}>
+            { hasCloseBtn && (<span className={styles['modal-close']} onClick={handleCloseModal}/>)}
             {children}
         </dialog>
     );

@@ -1,4 +1,4 @@
-import './ShowMoreButton.css';
+import styles from './ShowMoreButton.module.css';
 
 /**
  * The ShowMoreButton component is responsible for providing a user interface to load more photos.
@@ -14,8 +14,8 @@ interface ShowMoreButtonProps {
 export default function ShowMoreButton ({ onClick, currentLength, filteredLength }: ShowMoreButtonProps) {
   return (
     <>   
-      <p className="show-more-text">{currentLength} di {filteredLength}</p>
-      <button onClick={onClick} className="show-more-button">
+      <p className={styles["show-more-text"]}>{currentLength} di {filteredLength}</p>
+      <button onClick={onClick} className={styles["show-more-button"]}>
         Vedere di più
       </button>
     </>

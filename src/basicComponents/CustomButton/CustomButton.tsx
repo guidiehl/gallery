@@ -1,5 +1,4 @@
-import './CustomButton.css';
-
+import styles from './CustomButton.module.css';
 /**
  * The Button component is a reusable button component that can be used throughout the application.
  * It receives a label, a click handler, and optionally additional styles as props.
@@ -16,7 +15,7 @@ interface ButtonProps {
 export default function Button({ onClick, text, style }: ButtonProps) {
     return (
       <button 
-        className="custom-button" 
+        className={styles["custom-button"]}
         onClick={onClick}
         style={style}
       >

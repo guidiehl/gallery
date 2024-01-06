@@ -1,6 +1,6 @@
 import { Photo } from "../../types/photo";
 import PhotoItem from "../PhotoItem/PhotoItem";
-import './PhotoGrid.css';
+import styles from './PhotoGrid.module.css';
 
 /**
  * The PhotoGrid component is responsible for displaying a grid of photos.
@@ -16,9 +16,10 @@ interface PhotoGridProps {
 }
 
 export default function PhotoGrid({ photos, onSave }: PhotoGridProps) {
-    return <div className="photos-container"> {   
+    return <div className={styles["photos-container"]}> {   
         photos.map((photo: Photo) => {
             return <PhotoItem 
+                data-testid="photo-item"
                 key={photo.id} 
                 photo={photo} 
                 onSave={onSave}

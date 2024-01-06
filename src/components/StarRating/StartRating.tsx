@@ -21,8 +21,6 @@ export default function StarRating({ rating, onRatingChange }: StarRatingProps) 
     onRatingChange(isHalf ? star - 0.5 : star);
   };
 
-
-
   return (
     <div>
       {stars.map(star => (
@@ -31,9 +29,9 @@ export default function StarRating({ rating, onRatingChange }: StarRatingProps) 
         // The second child div represents the right half of the star and has a similar click handler but with the flag indicating it's the right half.
         // The 'filled' prop is determined by comparing the current rating with the star number (or star number - 0.5 for the left half).
         // This allows for half-star ratings.
-        <div key={star} className="star-rating-container">          
+        <div key={star} style={{ display: 'inline-block', position: 'relative', cursor: 'pointer' }}>          
           <div
-            className="star-rating-half-star"
+            style={{ position: 'absolute', width: '50%', overflow: 'hidden' }}
             onClick={() => handleStarClick(star, true)}
           >
             <Star filled={rating >= star - 0.5} />

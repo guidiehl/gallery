@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import './AutoSizeTextArea.css';
+import styles from './AutoSizeTextArea.module.css';
 
 /**
  * The AutoSizeTextArea component is a text area that automatically adjusts its size based on the content.
@@ -34,7 +34,7 @@ export default function useAutoSizeTextArea({ textAreaRef, title, onChange, isRe
     }, [textAreaRef, title]);
       
     return <textarea 
-        className="auto-size-text-area" 
+        className= {styles["auto-size-text-area"]}
         value={title} 
         onChange={onChange}
         rows={1}
