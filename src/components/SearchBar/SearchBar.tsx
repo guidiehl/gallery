@@ -16,6 +16,7 @@ export default function SearchBar ({ onSearchChange }: SearchBarProps) {
     return (
       <div className={styles['search-bar']}>
         <input
+          data-testid="search-bar"
           className={styles['search-bar-input']}
           placeholder="Cerca per nome della foto, album o autore" 
           type="search"

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+
 import styles from './Modal.module.css';
 
 /**
@@ -11,16 +11,16 @@ import styles from './Modal.module.css';
 interface ModalProps {
     setIsOpen: (isOpen: boolean) => void;
     children: React.ReactNode;
-    style: React.CSSProperties;
+    style?: React.CSSProperties;
 };
   
 export default function Modal ({ setIsOpen, children, style} : ModalProps) {
     return (
         <>
-            <div className={styles['dark-background']} onClick={() => setIsOpen(false)} />
+            <div data-testid="dark-background" className={styles['dark-background']} onClick={() => setIsOpen(false)} />
             <div className={styles['centered']}>
-                    <div className={styles['modal']} style={style}>   
-                        <span className={styles['modal-close']} onClick={() => setIsOpen(false)}/>            
+                    <div data-testid='modal' className={styles['modal']} style={style}>   
+                        <span data-testid="modal-close" className={styles['modal-close']} onClick={() => setIsOpen(false)}/>            
                         {children}
                     </div>
             </div>                      

@@ -15,7 +15,7 @@ export default function ShowMoreButton ({ onClick, currentLength, filteredLength
   return (
     <>   
       <p className={styles["show-more-text"]}>{currentLength} di {filteredLength}</p>
-      <button onClick={onClick} className={styles["show-more-button"]}>
+      <button data-testid="show-more-button" onClick={onClick} className={styles["show-more-button"]}>
         Vedere di più
       </button>
     </>

@@ -10,11 +10,15 @@ interface ButtonProps {
     onClick: () => void;
     text: string;
     style?: React.CSSProperties;
+    testId?: string;
 }
 
-export default function Button({ onClick, text, style }: ButtonProps) {
+export default function Button({ onClick, text, style, testId }: ButtonProps) {
+    const testIdValue = testId ? testId : 'custom-button';
+
     return (
       <button 
+        data-testid={testIdValue}
         className={styles["custom-button"]}
         onClick={onClick}
         style={style}

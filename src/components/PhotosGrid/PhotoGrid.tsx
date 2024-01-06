@@ -16,10 +16,9 @@ interface PhotoGridProps {
 }
 
 export default function PhotoGrid({ photos, onSave }: PhotoGridProps) {
-    return <div className={styles["photos-container"]}> {   
+    return <div data-testid="photo-grid" className={styles["photos-container"]}> {   
         photos.map((photo: Photo) => {
-            return <PhotoItem 
-                data-testid="photo-item"
+            return <PhotoItem                 
                 key={photo.id} 
                 photo={photo} 
                 onSave={onSave}

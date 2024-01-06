@@ -61,7 +61,7 @@ export default function PhotoModal({ onSave, photo, setIsOpen, } : PhotoModalPro
             }} 
             style={customModalStyle}
             >
-            <div className={styles["photo-modal-container"]}>
+            <div data-testid="photo-modal" className={styles["photo-modal-container"]}>
                 <img className={styles["photo-modal-image"]} src={photo.url} alt={photo.title} />
                 <div className={styles["photo-modal-data-container"]}>
                     <div className={styles["photo-modal-top-row"]}>
@@ -86,13 +86,13 @@ export default function PhotoModal({ onSave, photo, setIsOpen, } : PhotoModalPro
                     <span className={styles["photo-modal-album"]}>{photo.albumTitle}</span>
                     <div className={styles["photo-modal-buttons-container"]}>
                         <CustomButton 
-                            data-testid="edit-button"
+                            testId="edit-button"
                             style={{ marginRight: 8, backgroundColor: '#505050',  }} 
                             onClick={() => { setIsReadOnly(!isReadOnly); }} 
                             text="Modifica Titolo" 
                         />
                         <CustomButton  
-                            data-testid="save-button"
+                            testId="save-button"
                             onClick={() => {                             
                                 setIsReadOnly(true);                                                           
                                 onSave({ ...photo, title, rating });                                

@@ -9,7 +9,7 @@ export default function Spinner() {
 
 return (
     <div className={"center-container"}>
-        <span className={styles["loader"]}></span>
+        <span data-testid='spinner' className={styles["loader"]}></span>
     </div>
 );
 

@@ -10,8 +10,8 @@ interface StarRatingProps {
   onRatingChange: (rating: number) => void;
 }
 
-function Star({ filled }: { filled: boolean }) {
-  return <span id="star-rating" style={{ fontSize: '24px' }}>{filled ? '★' : '☆'}</span>;
+function Star({ filled, testId, id }: { filled: boolean, testId?: string, id?: string }) {
+  return <span id={id} data-testid={testId} style={{ fontSize: '24px' }}>{filled ? '★' : '☆'}</span>;
 }
 
 export default function StarRating({ rating, onRatingChange }: StarRatingProps) {
@@ -20,28 +20,30 @@ export default function StarRating({ rating, onRatingChange }: StarRatingProps) 
   const handleStarClick = (star: number, isHalf: boolean) => {
     onRatingChange(isHalf ? star - 0.5 : star);
   };
-
+  
   return (
-    <div>
-      {stars.map(star => (
-        // The first child div represents the left half of the star, 
-        // it has a click handler that calls handleStarClick with the current star number and a flag indicating it's the left half.
-        // The second child div represents the right half of the star and has a similar click handler but with the flag indicating it's the right half.
-        // The 'filled' prop is determined by comparing the current rating with the star number (or star number - 0.5 for the left half).
-        // This allows for half-star ratings.
-        <div key={star} style={{ display: 'inline-block', position: 'relative', cursor: 'pointer' }}>          
-          <div
-            style={{ position: 'absolute', width: '50%', overflow: 'hidden' }}
-            onClick={() => handleStarClick(star, true)}
-          >
-            <Star  filled={rating >= star - 0.5} />
-          </div>
-          <div onClick={() => handleStarClick(star, false)}>
-            <Star filled={rating >= star} />
-          </div>
-        </div>
-      ))}
-    </div>
+      <div>{
+          stars.map((star) => {
+            // The first child div represents the top star, 
+            // it shows up when you click at the left half and shows a half filled star.
+            // The second child div represents the bottom star, it can be filled or empty, depending on the rating.
+            // The 'filled' prop is determined by comparing the current rating with the star number.
+            // This allows for half-star ratings.
+            return (
+                <div key={star} style={{ display: 'inline-block', position: 'relative', cursor: 'pointer' }}>          
+                    <div
+                        style={{ position: 'absolute', width: '50%', overflow: 'hidden' }}
+                        onClick={() => handleStarClick(star, true)}
+                    >
+                        <Star id={"star-top" + star} testId="top" filled={rating >= star - 0.5} />
+                    </div>
+                    <div onClick={() => handleStarClick(star, false)}>
+                        <Star id={"star-bottom" + star} testId="bottom" filled={rating >= star} />
+                    </div>
+                </div>
+            );
+          })
+      }</div>
   );
 }
 
