@@ -3,8 +3,6 @@ import PhotoGrid from "../PhotosGrid/PhotoGrid";
 import SearchBar from "../SearchBar/SearchBar";
 import { Photo } from "../../types/photo";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
-import styles from './GalleryContainer.module.css';
-
 /**
  * The GalleryContainer component is responsible for displaying a list of photos in a grid format.
  * It receives an array of photos as a prop and renders a PhotoGrid component with these photos.
@@ -28,7 +26,7 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
     return (
         <>
             <SearchBar 
-                data-testid="search-bar"
+                
                 onSearchChange ={(event: ChangeEvent<HTMLInputElement>) => {
                     setSearchTerm(event.target.value);
                 }}
@@ -45,7 +43,7 @@ export default function GalleryContainer({ initialPhotos }: { initialPhotos: Pho
             {               
             filteredPhotos.length > currentPhotos.length && 
                 <ShowMoreButton 
-                    data-testid="show-more-button"
+                    
                     onClick={() => setCurrentPage(prevPageNumber => prevPageNumber + 1)}
                     currentLength={currentPhotos.length}
                     filteredLength={filteredPhotos.length} 

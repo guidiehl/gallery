@@ -1,7 +1,7 @@
 import { Photo } from "../../types/photo";
 import Modal from "../../basicComponents/Modal/Modal";
-import StarRating from "../StarRating/StartRating";
-import {  useEffect, useRef, useState } from "react";
+import StarRating from "../StarRating/StarRating";
+import { useEffect, useRef, useState } from "react";
 import AutoSizeTextArea from "../../basicComponents/AutoSizeTextArea/AutoSizeTextArea";
 import CustomButton from "../../basicComponents/CustomButton/CustomButton";
 import styles from './PhotoModal.module.css';
@@ -32,9 +32,7 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
     const [title, setTitle] = useState(photo.title);
     const [rating, setRating] = useState(photo.rating);
     const [isReadOnly, setIsReadOnly] = useState(true);
-
-
-   
+    
     useEffect(() => {
         // This useEffect hook is used to manage the focus and content of a text area when it becomes editable.
         // It runs every time the isReadOnly or title changes.
@@ -55,7 +53,7 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
             hasCloseBtn={true} 
             isOpen={isOpen} 
             onClose={() => {
-                setIsReadOnly(false);   
+                setIsReadOnly(true);   
                 setTitle(photo.title);
                 setRating(photo.rating);
                 onClose();                
@@ -95,7 +93,7 @@ export default function PhotoModal({ onSave, onClose, photo, isOpen } : PhotoMod
                         <CustomButton  
                             data-testid="save-button"
                             onClick={() => {                             
-                                setIsReadOnly(false);                                                           
+                                setIsReadOnly(true);                                                           
                                 onSave({ ...photo, title, rating });
                                 onClose();
                             }} 
